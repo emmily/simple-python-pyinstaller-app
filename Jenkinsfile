@@ -1,5 +1,20 @@
 pipeline {
-    agent any 
+    agent any
+    agent {
+        kubernetes {
+            yaml """
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+  - name: python
+    image: python:3.10
+    command:
+    - cat
+    tty: true
+"""
+        }
+    } 
     stages {
         stage('Build') { 
             steps {
